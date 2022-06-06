@@ -1,0 +1,47 @@
+id: WhiteBishop
+attrs:
+  path: ./pieces/Bishop0.png
+---
+id: BlackBishop
+attrs:
+  path: ./pieces/Bishop1.png
+---
+id: WhiteKing
+attrs:
+  path: ./pieces/King0.png
+---
+id: BlackKing
+attrs:
+  path: ./pieces/King1.png
+---
+id: WhiteKnight
+attrs:
+  path: ./pieces/Knight0.png
+---
+id: BlackKnight
+attrs:
+  path: ./pieces/Knight1.png
+---
+id: WhitePawn
+attrs:
+  path: ./pieces/Pawn0.png
+---
+id: BlackPawn
+attrs:
+  path: ./pieces/Pawn1.png
+---
+id: WhiteQueen
+attrs:
+  path: ./pieces/Queen0.png
+---
+id: BlackQueen
+attrs:
+  path: ./pieces/Queen1.png
+---
+id: WhiteRook
+attrs:
+  path: ./pieces/Rook0.png
+---
+id: BlackRook
+attrs:
+  path: ./pieces/Rook1.png

@@ -1,0 +1,30 @@
+resources:
+  - assets::Pieces
+
+attrs:
+  teams: {
+    0: "White",
+    1: "Black"
+  }
+  selected: false
+  position: [0,0]
+  type: [Pawn, Knight, Bishop, Rook, Queen, King]
+  team: 0
+
+components:
+  - MouseController
+
+on_init:
+  - $new: >
+      teams[team]+type // E.g. WhitePawn
+    attrs:
+      position: >
+        position[0] * 64, position[1] * 64]
+      id: "piece"
+      width: 64
+      height: 64
+
+on_change(position):
+  # updates the Piece asset position reactively this cell position
+  - $piece.position: >
+      selected !== false ? MouseController.cursor.map((pos) => pos - 64/2) : [position[0] * 64, position[1] * 64]

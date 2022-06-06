@@ -1,0 +1,30 @@
+attrs:
+  position: [0,0]
+  color: "#ff0000"
+  width: 64
+  height: 64
+
+components:
+  - id: MouseController
+
+# Action that draws the cell rectangle
+render!:
+  - DrawRectangle(0, 0, width, height)
+  - Fill
+  - Draw
+
+on_init:
+  # Store the initial color
+  - $initial_color: color
+
+on_changed:
+  - SetHexColor(color)
+  - render
+
+on_mouseover:
+  - $color: "#ff0000"
+  - $parent.isHover: true
+
+on_mouseout:
+  - $color: initial_color
+  - $parent.isHover: false

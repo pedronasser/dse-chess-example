@@ -1,0 +1,7 @@
+resources:
+  - entities::Board
+
+# When the scene starts
+on_init:
+  - new: Board
+  - log: "Match started"

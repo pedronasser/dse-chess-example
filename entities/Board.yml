@@ -1,0 +1,104 @@
+resources:
+  - assets::ChessPiece
+  - assets::BoardCell
+
+consts:
+  board: {
+    width: 8,
+    height: 8
+  }
+  composition: [Rook,Knight,Bishop,Queen,King,Bishop,Knight,Rook,Pawn,Pawn,Pawn,Pawn,Pawn,Pawn,Pawn,Pawn]
+
+attrs:
+  selected: false
+  prev_selection: false
+
+# Action that creates the chess pieces entities for the given team
+createBoard!:
+  # Define colors for the scope of this action
+  - defines:
+      colors: ["#f0f0f0", "#333"]
+
+  # For each of the width * height cells
+  - repeat(board.width * board.height):
+    - defines:
+        row: >
+          Math.floor(index / boardWidth)
+        column: >
+          index % boardWidth
+    # Creates new entity
+    - new: BoardCell
+      attrs:
+        $position: >
+          [column * 64, row * 64]
+        $color: >
+          colors[i % 2]
+        $id: >
+          `BoardCell-${row}-${column}`
+        $piece: >
+          composition[i]
+
+# Action that creates the chess pieces entities for the given team
+createTeam!:
+  # For each piece of the team composition
+  - repeat(composition.length):
+    # Creates new chess piece
+    - new: ChessPiece
+      as: chess_piece
+      attrs:
+        $id: >
+          `ChessPiece-${team}-${index}`
+        $position: >
+          team === 1 ?
+            [i % 8, Math.floor(i / 8)] :
+            [(i % 8), 7 - Math.floor(i / 8)]
+        $type: >
+          composition[i]
+        $team: >
+          team
+
+# When the board is initialized it creates all pieces for each team and board grid
+on_init:
+  - createBoard
+  - createTeam(0)
+  - createTeam(1)
+
+# Whenever the board selection state changes
+on_change(selected):
+  - match(selected):
+    # if there is a selected chess piece
+    [true]:
+      # if the new selection is not the same as the previous one
+      - [selected != prev_selection]:
+        - $prev_selection: selected
+        - $piece: >
+            self[selected]
+        # update 'selected' state for the selected piece
+        - $piece.selected: true
+    # if there is no selected chess piece
+    [false]:
+      - [prev_selection != false]:
+        - $piece: >
+            self[prev_selection]
+    
+# if (selected != false) {
+#   selected_current == false) {
+#     const cell = entities[selected];
+#     if (cell && cell.piece !== null) {
+#       const piece = entities[cell.piece];
+#       if (piece) {
+#         piece.selected = true;
+#       }
+#     }
+#     selected_current = cell.piece;
+#   }
+# } else {
+#   selected_current != false) {
+#     selected_current];
+#     if (piece) {
+#       piece.selected = false;
+#     }
+#     selected_current = false;
+#   }
+# }
+

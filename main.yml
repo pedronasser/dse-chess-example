@@ -1,0 +1,17 @@
+resources:
+  - scenes::Match
+
+components:
+  - id: renderer
+    type: Renderer
+    attrs:
+      fullscreen: false
+      window: {
+        size: [800, 600]
+      }
+
+on_init:
+  # Create match instance
+  - new: Match
+  # Update renderer target to Match
+  - $renderer.target: Match

@@ -1,0 +1,31 @@
+resources:
+  - assets::Cell
+
+attrs:
+  position: [0,0]
+  color: "#ff0000"
+  isHover: false
+  piece: null
+
+components:
+  - MouseController
+
+on_init:
+  - new: Cell
+    attrs:
+      $position: >
+        position
+      $color: >
+       String(color)
+      $id: >
+       id + "-Cell"
+
+on_mousedown:
+  $parent.selected:
+    if: isHover != false
+    value: id
+
+on_mouseup:
+  $parent.selected:
+    if: isHover != false
+    value: false
